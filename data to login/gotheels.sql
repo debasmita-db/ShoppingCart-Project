@@ -1,20 +1,21 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2015 at 09:39 PM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: May 14, 2021 at 05:44 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `gotheels`
@@ -26,13 +27,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
   `category_name` varchar(50) NOT NULL,
   `category_description` varchar(255) NOT NULL,
-  `category_icon` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `category_icon` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -49,45 +49,16 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_description`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
---
-
-CREATE TABLE IF NOT EXISTS `customer` (
-  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_fname` char(20) NOT NULL,
-  `customer_lname` char(20) NOT NULL,
-  `email` varchar(160) NOT NULL,
-  `password` char(40) NOT NULL,
-  `level` int(11) NOT NULL DEFAULT '1',
-  `street` char(40) DEFAULT NULL,
-  `city` char(40) DEFAULT NULL,
-  `state` char(20) DEFAULT NULL,
-  `zip` char(10) DEFAULT NULL,
-  PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
-
---
--- Dumping data for table `customer`
---
-
-INSERT INTO `customer` (`customer_id`, `customer_fname`, `customer_lname`, `email`, `password`, `level`, `street`, `city`, `state`, `zip`) VALUES
-(75, 'Hong', 'Todd', 'test@yahoo.com', '806b2af4633e64af88d33fbe4165a06a', 1, NULL, NULL, NULL, NULL),
-(76, 'Hong', 'min', 'test2@yahoo.com', '806b2af4633e64af88d33fbe4165a06a', 1, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `image`
 --
 
-CREATE TABLE IF NOT EXISTS `image` (
-  `image_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `image` (
+  `image_id` int(11) NOT NULL,
   `filename` varchar(50) NOT NULL,
   `thumb_filename` varchar(50) NOT NULL,
   `caption` varchar(100) DEFAULT NULL,
-  `product_id` int(11) NOT NULL,
-  PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `image`
@@ -116,12 +87,11 @@ INSERT INTO `image` (`image_id`, `filename`, `thumb_filename`, `caption`, `produ
 -- Table structure for table `imagezoom`
 --
 
-CREATE TABLE IF NOT EXISTS `imagezoom` (
-  `imagezoom_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `imagezoom` (
+  `imagezoom_id` int(11) NOT NULL,
   `zoom_filename` varchar(50) NOT NULL,
-  `zoom_thumb` varchar(50) NOT NULL,
-  PRIMARY KEY (`imagezoom_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=76 ;
+  `zoom_thumb` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `imagezoom`
@@ -210,11 +180,10 @@ INSERT INTO `imagezoom` (`imagezoom_id`, `zoom_filename`, `zoom_thumb`) VALUES
 -- Table structure for table `imagezoom_lookup`
 --
 
-CREATE TABLE IF NOT EXISTS `imagezoom_lookup` (
+CREATE TABLE `imagezoom_lookup` (
   `product_id` int(11) NOT NULL,
-  `imagezoom_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`imagezoom_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=76 ;
+  `imagezoom_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `imagezoom_lookup`
@@ -300,47 +269,15 @@ INSERT INTO `imagezoom_lookup` (`product_id`, `imagezoom_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
---
-
-CREATE TABLE IF NOT EXISTS `orders` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL,
-  `amount` float NOT NULL,
-  `order_status` char(10) NOT NULL,
-  `ship_customer_fname` char(20) NOT NULL,
-  `ship_customer_lname` char(20) NOT NULL,
-  `ship_street` char(40) NOT NULL,
-  `ship_city` char(40) NOT NULL,
-  `ship_state` char(20) NOT NULL,
-  `ship_zip` char(10) NOT NULL,
-  `date` date NOT NULL,
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `customer_id`, `amount`, `order_status`, `ship_customer_fname`, `ship_customer_lname`, `ship_street`, `ship_city`, `ship_state`, `ship_zip`, `date`) VALUES
-(1, 4, 70, 'N', 'monique', 'pheny', '425 beverlly', 'houston', 'texas', '85623', '2014-05-07'),
-(2, 9, 80, 'N', 'rawen', 'cuute', '0239 bidden', 'rohyn', 'colorado', '52364', '2014-05-07'),
-(3, 20, 50, 'N', 'beioh', 'riyewen', '893 locogn', 'indiana', 'indiana', '56542', '2014-05-07'),
-(4, 22, 244, 'N', '', '', '', '', '', '', '2014-06-11');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `order_items`
 --
 
-CREATE TABLE IF NOT EXISTS `order_items` (
+CREATE TABLE `order_items` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `item_price` float NOT NULL,
-  `quantity` int(11) NOT NULL,
-  PRIMARY KEY (`order_id`,`product_id`,`type_id`)
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -360,35 +297,36 @@ INSERT INTO `order_items` (`order_id`, `product_id`, `type_id`, `item_price`, `q
 -- Table structure for table `product`
 --
 
-CREATE TABLE IF NOT EXISTS `product` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL,
   `product_name` varchar(100) NOT NULL,
   `product_price` int(11) NOT NULL,
   `product_description` varchar(255) NOT NULL,
   `thumb_filename` varchar(50) NOT NULL,
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `short_desc` text NOT NULL,
+  `sku` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_description`, `thumb_filename`) VALUES
-(1, 'Amachi ', 75, 'Be a trendsetter in the Amachi. This cute slide is on point with it''s vintage appearance and tan leather upper. A 5 inch wedge and 1 1/2 inch platform complete this retro look.\r\nShoe Details:\r\n\r\n    Leather Upper\r\n    Man Made Sole\r\n    Made In China\r\n   ', 'Amachi_MAIN_TH.jpg'),
-(2, 'Yuki Monkey', 79, 'Find your happiness in this furry style by Yuki Monkey. The Close Call showcases a taupe fabric upper with faux fur and buckles. A stacked 4 1/2 inch heel and 1 inch platform perfects this fall ready boot.\r\nShoe Details:\r\n\r\n    Man Made Upper\r\n    Man Mad', 'Yuky_MAIN_TH.jpg'),
-(3, 'Benson', 85, 'The Benson is practically flawless! This pump created by Enzo Angiolini is made with a rich red leather and stunning collar back. This curvy silhouette is finished with a 4 inch heel and pointed toe.\r\nShoe Details:\r\n    Leather Upper\r\n    Man Made Sole\r\n ', 'benson_MAIN_TH.jpg 	'),
-(4, 'Mindy from De Qui', 80, 'A practical everyday flat doesn''t have to be boring! You''ll get a lot of attention with the eye catching Mindy from De Qui by Sam Edelman. This look features a silver iridescent upper with patent details and spiky bow adoring the vamp.\r\nShoe Details:\r\n   ', 'mindy_MAIN_TH.jpg'),
-(5, 'Leno', 65, 'Get excited for the Celebration! This Leno oxford features a coral pink lace upper with faux leather detailing, capped toe and lace up vamp.', 'leno_MAIN_TH.jpg'),
-(6, 'Vies Bon', 99, 'Feel the happiness radiate from the Hold Please by Unlisted. A cognac synthetic leather creates the upper and features buckle details. A beige fabric with embroidered design covers the 5 1/2 inch wedge and 1 1/2 inch platform for a flawless look.', 'vies_MAIN_TH.jpg'),
-(7, 'Coral Reef', 99, 'Keep cool in the Coral Reef. This coral multi peep toe bootie features a slight sneaker inspiration with tie up vamp. Snake stamped accents, 6 inch heel and 1 1/2 inch platform create a flawless touch.', 'coral_MAIN_TH.jpg'),
-(8, 'Luis', 99, 'You''ll inspire even the greatest fashionista in Luis by Ivanka Trump. This light natural style is made from a supple black leather and sports a cute peep toe. A 3 1/2 inch stiletto heel completes this style so you can be ready to take on whatever life thr', 'Luis_MAIN_TH.jpg'),
-(9, 'Amenica', 77, 'Ooh la la! Love is in the air with the Amenica by Boohh. This Parisian inspired pump features a slingback strap with soft suede knot. A striped satin upper covers the silhouette, pointed toe and 4 1/2 inch heel. Last but not least is a stunning Eiffel Tow', 'Amenica_MAIN_TH.jpg'),
-(10, 'Hole Soul', 82, 'Get that fab factor you''ve been looking for with this new style from  David. Vapor brings you a beige leather upper with slouch detail. This knee boot is finished off with an adjustable tie at the side, a stacked 4 1/4 inch heel and 1/2 inch hidden', 'holesoul_MAIN_TH.jpg'),
-(11, 'Beaky Red', 85, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a snake print faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'Beaky_MAIN_TH.jpg'),
-(12, 'Beaky Silver', 82, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a silver metallic faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'beakys_MAIN_TH.jpg'),
-(13, 'Beaky Gold', 60, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a gold metallic faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'beakyg_MAIN_TH.jpg'),
-(14, 'Jungle Dee', 65, ' You''ll love the playful look of the Jungle Dee. This My Laundry sandal features a rich black leather vamp with double adjustable ankle strap in a glossy beige patent. Decorative studs, a wooden 6 inch heel and 1 1/2 inch platform complete this beauty.', 'jungle_MAIN_TH.jpg'),
-(15, 'Alani', 40, 'The Alani adds edge to any look. This Steve Madden ankle boot features a brown leather upper with studded back and sides. A buckle detail, 3 1/2 inch heel and rounded toe perfect this wearable style.\r\n\r\n', 'alani_MAIN_TH.jpg');
+INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_description`, `thumb_filename`, `short_desc`, `sku`) VALUES
+(1, 'Amachi ', 759, 'Be a trendsetter in the Amachi. This cute slide is on point with it\'s vintage appearance and tan leather upper. A 5 inch wedge and 1 1/2 inch platform complete this retro look.\r\nShoe Details:\r\n\r\n    Leather Upper\r\n    Man Made Sole\r\n    Made In india\r\n   ', 'Amachi_MAIN_TH.jpg', 'Be a trendsetter in the Amachi.', '4355gt'),
+(2, 'Yuki Monkey', 799, 'Find your happiness in this furry style by Yuki Monkey. The Close Call showcases a taupe fabric upper with faux fur and buckles. A stacked 4 1/2 inch heel and 1 inch platform perfects this fall ready boot.\r\nShoe Details:\r\n\r\n    Man Made Upper\r\n    Man Mad', 'Yuky_MAIN_TH.jpg', 'Find your happiness.', '0rt345'),
+(3, 'Benson', 858, 'The Benson is practically flawless! This pump created by Enzo Angiolini is made with a rich red leather and stunning collar back. This curvy silhouette is finished with a 4 inch heel and pointed toe.\r\nShoe Details:\r\n    Leather Upper\r\n    Man Made Sole\r\n ', 'benson_MAIN_TH.jpg 	', 'the Benson is practically flawless!', 'bcy7474'),
+(4, 'Mindy from De Qui', 808, 'A practical everyday flat doesn\'t have to be boring! You\'ll get a lot of attention with the eye catching Mindy from De Qui by Sam Edelman. This look features a silver iridescent upper with patent details and spiky bow adoring the vamp.\r\nShoe Details:\r\n   ', 'mindy_MAIN_TH.jpg', 'A practical everyday flat.', 'jrhgu767'),
+(5, 'Leno', 659, 'Get excited for the Celebration! This Leno oxford features a coral pink lace upper with faux leather detailing, capped toe and lace up vamp.', 'leno_MAIN_TH.jpg', 'the Benson is practically flawless!', 'urhfu7887'),
+(6, 'Vies Bon', 9999, 'Feel the happiness radiate from the Hold Please by Unlisted. A cognac synthetic leather creates the upper and features buckle details. A beige fabric with embroidered design covers the 5 1/2 inch wedge and 1 1/2 inch platform for a flawless look.', 'vies_MAIN_TH.jpg', 'Feel the happiness.', '0ver34'),
+(7, 'Coral Reef', 999, 'Keep cool in the Coral Reef. This coral multi peep toe bootie features a slight sneaker inspiration with tie up vamp. Snake stamped accents, 6 inch heel and 1 1/2 inch platform create a flawless touch.', 'coral_MAIN_TH.jpg', 'A practical everyday flat', '0vfg344'),
+(8, 'Luis', 990, 'You\'ll inspire even the greatest fashionista in Luis by Ivanka Trump. This light natural style is made from a supple black leather and sports a cute peep toe. A 3 1/2 inch stiletto heel completes this style so you can be ready to take on whatever life thr', 'Luis_MAIN_TH.jpg', 'Find your happiness.', '0zcxvs3d'),
+(9, 'Amenica', 779, 'Ooh la la! Love is in the air with the Amenica by Boohh. This Parisian inspired pump features a slingback strap with soft suede knot. A striped satin upper covers the silhouette, pointed toe and 4 1/2 inch heel. Last but not least is a stunning Eiffel Tow', 'Amenica_MAIN_TH.jpg', 'ooh la la! Love is in the air', '0v fv43rf'),
+(10, 'Hole Soul', 828, 'Get that fab factor you\'ve been looking for with this new style from  David. Vapor brings you a beige leather upper with slouch detail. This knee boot is finished off with an adjustable tie at the side, a stacked 4 1/4 inch heel and 1/2 inch hidden', 'holesoul_MAIN_TH.jpg', 'Feel the happiness', 'vmihrf7'),
+(11, 'Beaky Red', 858, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a snake print faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'Beaky_MAIN_TH.jpg', 'ooh la la! Love is in the air', 'vkfjv77f'),
+(12, 'Beaky Silver', 828, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a silver metallic faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'beakys_MAIN_TH.jpg', 'Luem is ready', 'vkjg78'),
+(13, 'Beaky Gold', 608, 'Here comes trouble, the Luem is ready to make your girls night! This  Trenvor sandal is created with a gold metallic faux leather and multiple winding straps. A 5 inch heel and 1/2 inch subtle platform create a leg lengthening lift.', 'beakyg_MAIN_TH.jpg', 'Find your happiness.', 'fkm7ff'),
+(14, 'Jungle Dee', 658, ' You\'ll love the playful look of the Jungle Dee. This My Laundry sandal features a rich black leather vamp with double adjustable ankle strap in a glossy beige patent. Decorative studs, a wooden 6 inch heel and 1 1/2 inch platform complete this beauty.', 'jungle_MAIN_TH.jpg', 'the Benson is practically flawless!', 'fngv8f'),
+(15, 'Alani', 409, 'The Alani adds edge to any look. This Steve Madden ankle boot features a brown leather upper with studded back and sides. A buckle detail, 3 1/2 inch heel and rounded toe perfect this wearable style.\r\n\r\n', 'alani_MAIN_TH.jpg', 'the Benson is practically flawless!', 'vfn7f');
 
 -- --------------------------------------------------------
 
@@ -396,10 +334,9 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_d
 -- Table structure for table `product_category_lookup`
 --
 
-CREATE TABLE IF NOT EXISTS `product_category_lookup` (
+CREATE TABLE `product_category_lookup` (
   `product_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`category_id`)
+  `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -473,13 +410,12 @@ INSERT INTO `product_category_lookup` (`product_id`, `category_id`) VALUES
 -- Table structure for table `product_type_lookup`
 --
 
-CREATE TABLE IF NOT EXISTS `product_type_lookup` (
+CREATE TABLE `product_type_lookup` (
   `product_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `imagefile` varchar(50) NOT NULL,
   `price` float NOT NULL,
-  `inventory` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`type_id`)
+  `inventory` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -719,14 +655,13 @@ INSERT INTO `product_type_lookup` (`product_id`, `type_id`, `imagefile`, `price`
 -- Table structure for table `type`
 --
 
-CREATE TABLE IF NOT EXISTS `type` (
-  `type_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `type` (
+  `type_id` int(11) NOT NULL,
   `type_name` varchar(50) NOT NULL,
   `type_description` varchar(250) NOT NULL,
   `type_icon` varchar(50) DEFAULT NULL,
-  `type_icon_un` varchar(50) NOT NULL,
-  PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=116 ;
+  `type_icon_un` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `type`
@@ -748,6 +683,105 @@ INSERT INTO `type` (`type_id`, `type_name`, `type_description`, `type_icon`, `ty
 (95, '9.5', 'Size 9.5', '9_5.gif', '9_5u.gif'),
 (105, '10.5', 'Size 10.5', '10_5.gif', '10_5u.gif'),
 (115, '11.5', 'Size 11.5', '11_5.gif', '11_5u.gif');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `image`
+--
+ALTER TABLE `image`
+  ADD PRIMARY KEY (`image_id`);
+
+--
+-- Indexes for table `imagezoom`
+--
+ALTER TABLE `imagezoom`
+  ADD PRIMARY KEY (`imagezoom_id`);
+
+--
+-- Indexes for table `imagezoom_lookup`
+--
+ALTER TABLE `imagezoom_lookup`
+  ADD PRIMARY KEY (`imagezoom_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_id`,`product_id`,`type_id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `product_category_lookup`
+--
+ALTER TABLE `product_category_lookup`
+  ADD PRIMARY KEY (`product_id`,`category_id`);
+
+--
+-- Indexes for table `product_type_lookup`
+--
+ALTER TABLE `product_type_lookup`
+  ADD PRIMARY KEY (`product_id`,`type_id`);
+
+--
+-- Indexes for table `type`
+--
+ALTER TABLE `type`
+  ADD PRIMARY KEY (`type_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `image`
+--
+ALTER TABLE `image`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `imagezoom`
+--
+ALTER TABLE `imagezoom`
+  MODIFY `imagezoom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
+--
+-- AUTO_INCREMENT for table `imagezoom_lookup`
+--
+ALTER TABLE `imagezoom_lookup`
+  MODIFY `imagezoom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `type`
+--
+ALTER TABLE `type`
+  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
